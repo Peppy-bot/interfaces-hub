@@ -3,7 +3,7 @@
   peppy_schema: "interface_v1",
   manifest: {
     name: "openarm01_gripper",
-    tag: "0.1.0"
+    tag: "v1"
   },
   interfaces: {
     actions: [

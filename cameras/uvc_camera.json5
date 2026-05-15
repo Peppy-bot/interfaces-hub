@@ -2,7 +2,7 @@
   peppy_schema: "interface_v1",
   manifest: {
     name: "uvc_camera",
-    tag: "0.1.0"
+    tag: "v1"
   },
   interfaces: {
     topics: [
