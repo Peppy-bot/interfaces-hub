@@ -17,7 +17,11 @@
               $type: "array",
               $items: "f64",
               $length: 7
-            }
+            },
+            // Requested trajectory duration (s). The arm floors this at the
+            // duration implied by its per-joint velocity limits, so a too-fast
+            // request is slowed to a safe move rather than rejected.
+            duration_s: "f64"
           }
         },
         feedback_topic: {
@@ -39,6 +43,73 @@
               $type: "array",
               $items: "f64",
               $length: 7
+            },
+            action_time: "f64"
+          }
+        }
+      },
+      // Cartesian motion: move the end-effector to a world-frame pose along a
+      // quintic position path with quaternion slerp orientation. The arm solves
+      // IK in-process at the control rate (closed-form, seeded for continuity),
+      // so callers command Cartesian goals directly without a separate IK round
+      // trip. Frame conventions match the kinematics interface: poses are in the
+      // WORLD frame, quaternion is [x, y, z, w] (non-unit inputs are normalized),
+      // lengths in meters.
+      {
+        name: "move_arm",
+        goal_service: {
+          request_message_format: {
+            feedback_frequency: "u32",
+            // Target end-effector position in the world frame: x, y, z (m).
+            position: {
+              $type: "array",
+              $items: "f64",
+              $length: 3
+            },
+            // Target end-effector orientation, quaternion x, y, z, w.
+            orientation: {
+              $type: "array",
+              $items: "f64",
+              $length: 4
+            },
+            // Requested trajectory duration (s). The arm plans IK along the path
+            // and floors this at the duration implied by the per-joint velocity
+            // limits, so a too-fast request (or a near-singular path) is slowed to
+            // a safe move rather than driven fast.
+            duration_s: "f64"
+          }
+        },
+        feedback_topic: {
+          qos_profile: "standard",
+          message_format: {
+            // Current end-effector pose in the world frame.
+            position: {
+              $type: "array",
+              $items: "f64",
+              $length: 3
+            },
+            orientation: {
+              $type: "array",
+              $items: "f64",
+              $length: 4
+            },
+            action_time: "f64"
+          }
+        },
+        result_service: {
+          response_message_format: {
+            success: "bool",
+            message: "string",
+            // Final end-effector pose reached, in the world frame.
+            final_position: {
+              $type: "array",
+              $items: "f64",
+              $length: 3
+            },
+            final_orientation: {
+              $type: "array",
+              $items: "f64",
+              $length: 4
             },
             action_time: "f64"
           }
