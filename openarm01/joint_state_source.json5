@@ -1,0 +1,37 @@
+// Measured joint state of one openarm01 arm, emitted continuously at the
+// arm's `state_rate_hz` regardless of mode. The return direction of the
+// bidirectional joint-stream pattern: a teleop or monitoring node consumes it
+// through a `from_any` dependency and tells arms apart by `arm_id`.
+{
+  peppy_schema: "interface_v1",
+  manifest: {
+    name: "openarm01_joint_state_source",
+    tag: "v1",
+  },
+  interfaces: {
+    topics: [
+      {
+        name: "joint_states",
+        // High-frequency stream where only the latest state matters;
+        // occasional drops are acceptable.
+        qos_profile: "sensor_data",
+        message_format: {
+          // Which arm this state describes (0 = left, 1 = right).
+          arm_id: "u8",
+          // Measured joint positions (rad), j1..j7.
+          positions: {
+            $type: "array",
+            $items: "f64",
+            $length: 7
+          },
+          // Measured joint velocities (rad/s), j1..j7.
+          velocities: {
+            $type: "array",
+            $items: "f64",
+            $length: 7
+          }
+        }
+      }
+    ]
+  }
+}

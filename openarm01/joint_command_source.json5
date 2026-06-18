@@ -1,0 +1,36 @@
+// Streamed joint-space setpoints for one openarm01 arm. A producer (teleop
+// leader, planner, calibration script) conforms to this interface and emits
+// `joint_commands` continuously; the arm follows them whenever no move is
+// running, locking to the first producer instance it sees. Messages carry the
+// target `arm_id` so one producer can drive either arm and each arm ignores
+// commands addressed to the other.
+{
+  peppy_schema: "interface_v1",
+  manifest: {
+    name: "openarm01_joint_command_source",
+    tag: "v1",
+  },
+  interfaces: {
+    topics: [
+      {
+        name: "joint_commands",
+        // High-frequency stream where only the latest setpoint matters;
+        // occasional drops are acceptable.
+        qos_profile: "sensor_data",
+        message_format: {
+          // Which arm this command addresses (0 = left, 1 = right).
+          arm_id: "u8",
+          // Desired joint positions (rad), j1..j7. The arm clamps them to its
+          // URDF joint limits and rate-limits its setpoint toward them at its
+          // per-joint velocity limits; the velocity feedforward is derived from
+          // that chase, so a dense position stream needs no separate velocity.
+          positions: {
+            $type: "array",
+            $items: "f64",
+            $length: 7
+          }
+        }
+      }
+    ]
+  }
+}
