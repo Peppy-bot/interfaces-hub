@@ -1,9 +1,13 @@
 // Streamed joint-space setpoints for one openarm01 arm. A producer (teleop
 // leader, planner, calibration script) conforms to this interface and emits
 // `joint_commands` continuously; the arm follows them whenever no move is
-// running, locking to the first producer instance it sees. Messages carry the
-// target `arm_id` so one producer can drive either arm and each arm ignores
-// commands addressed to the other.
+// running, locking to the first producer instance it sees. The lock releases
+// two ways, so producers can fail over and hand off: a move_arm/move_arm_joints
+// goal preempts the stream (the arm resumes following when the move ends), and
+// the arm drops the lock once its configured stream timeout passes with no new
+// message, freeing it for a replacement producer if the current one dies or
+// stalls. Messages carry the target `arm_id` so one producer can drive either
+// arm and each arm ignores commands addressed to the other.
 {
   peppy_schema: "interface_v1",
   manifest: {
