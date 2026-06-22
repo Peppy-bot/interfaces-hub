@@ -14,7 +14,7 @@
         name: "move_gripper",
         goal_service: {
           request_message_format: {
-            // Target gripper opening in meters (0.0 = closed, 0.044 = fully open on V10).
+            // Target gripper opening in meters (0.0 = closed, 0.044 = fully open on V1.0).
             position: "f64"
           }
         },
