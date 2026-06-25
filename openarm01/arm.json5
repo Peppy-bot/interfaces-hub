@@ -1,6 +1,6 @@
 {
   // This same interface is shared between the real robot and the sim implementations
-  peppy_schema: "interface_v1",
+  peppy_schema: "interface/v1",
   manifest: {
     name: "openarm01_arm",
     tag: "v1"

@@ -7,7 +7,7 @@
 // instance, and tells the two grippers apart by gripper_id, so one sim process
 // drives both.
 {
-  peppy_schema: "interface_v1",
+  peppy_schema: "interface/v1",
   manifest: {
     name: "openarm01_gripper_sim_passthrough",
     tag: "v1",

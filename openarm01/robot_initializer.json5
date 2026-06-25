@@ -4,7 +4,7 @@
   // returns ready:true instantly (no-op health check) and sim implementations return
   // ready:false while the engine loads, ready:true once the scene is ready. Lets
   // backbone be sim/real agnostic.
-  peppy_schema: "interface_v1",
+  peppy_schema: "interface/v1",
   manifest: {
     name: "openarm01_robot_initializer",
     tag: "v1"

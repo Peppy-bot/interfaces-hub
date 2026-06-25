@@ -4,7 +4,7 @@
 // for the arm: a teleop or monitoring node consumes it through a `from_any`
 // dependency and tells grippers apart by `gripper_id`.
 {
-  peppy_schema: "interface_v1",
+  peppy_schema: "interface/v1",
   manifest: {
     name: "openarm01_gripper_state_source",
     tag: "v1",

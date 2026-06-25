@@ -3,7 +3,7 @@
 // bidirectional joint-stream pattern: a teleop or monitoring node consumes it
 // through a `from_any` dependency and tells arms apart by `arm_id`.
 {
-  peppy_schema: "interface_v1",
+  peppy_schema: "interface/v1",
   manifest: {
     name: "openarm01_joint_state_source",
     tag: "v1",

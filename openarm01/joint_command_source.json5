@@ -9,7 +9,7 @@
 // stalls. Messages carry the target `arm_id` so one producer can drive either
 // arm and each arm ignores commands addressed to the other.
 {
-  peppy_schema: "interface_v1",
+  peppy_schema: "interface/v1",
   manifest: {
     name: "openarm01_joint_command_source",
     tag: "v1",

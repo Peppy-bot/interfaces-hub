@@ -7,7 +7,7 @@
 // and IMU streams are out of scope; an implementation exposing them should
 // conform to an additional interface for those.
 {
-  peppy_schema: "interface_v1",
+  peppy_schema: "interface/v1",
   manifest: {
     name: "rgbd_camera",
     tag: "v1"

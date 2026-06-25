@@ -10,7 +10,7 @@
 // either gripper and each gripper ignores commands addressed to the other. The
 // return direction of this bidirectional pattern is openarm01_gripper_state_source.
 {
-  peppy_schema: "interface_v1",
+  peppy_schema: "interface/v1",
   manifest: {
     name: "openarm01_gripper_command_source",
     tag: "v1",

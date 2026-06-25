@@ -6,7 +6,7 @@
 // sim consumes this from any arm instance and tells the two arms apart by
 // arm_id, so one sim process drives both.
 {
-  peppy_schema: "interface_v1",
+  peppy_schema: "interface/v1",
   manifest: {
     name: "openarm01_arm_sim_passthrough",
     tag: "v1",
