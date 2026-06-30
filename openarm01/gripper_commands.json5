@@ -1,4 +1,4 @@
-// Streamed opening setpoints for one openarm01 gripper, addressed by `gripper_id`.
+// Streamed opening commands for one openarm01 gripper, addressed by `gripper_id`.
 {
   peppy_schema: "interface/v1",
   manifest: {
