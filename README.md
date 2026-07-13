@@ -11,7 +11,7 @@ Create a new `.json5` file under the relevant category:
 ```json5
 {
   peppy_schema: "contract/v1",
-  manifest: { name: "<contract_name>", tag: "<tag>" }, // tag is a contract identifier like "v1" — not semver (dots forbidden)
+  manifest: { name: "<contract_name>", tag: "<tag>" }, // tag is a contract identifier like "v1", not semver (dots forbidden)
   interfaces: {
     topics:   [ /* ... */ ],
     services: [ /* ... */ ],
@@ -22,4 +22,4 @@ Create a new `.json5` file under the relevant category:
 
 ## Use
 
-This repo is consumed by `peppy repo update` alongside node and launcher repositories.
+This repo is consumed by `peppy repo refresh` alongside node and launcher repositories.
