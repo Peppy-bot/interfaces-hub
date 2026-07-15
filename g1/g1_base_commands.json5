@@ -1,0 +1,28 @@
+// Streamed base velocity command for one Unitree G1: planar body-frame
+// velocity (forward, lateral, yaw-rate). One contract so any commanding device
+// (teleop panel, policy, scripted driver) implements the whole locomotion
+// command surface, and every G1 backend (real LocoClient, MuJoCo, Isaac)
+// consumes the same stream.
+{
+  peppy_schema: "contract/v1",
+  manifest: {
+    name: "g1_base_commands",
+    tag: "v1",
+  },
+  interfaces: {
+    topics: [
+      {
+        name: "base_velocity_commands",
+        qos_profile: "sensor_data",
+        message_format: {
+          // Forward velocity (m/s), robot body frame. Positive = forward.
+          vx: "f64",
+          // Lateral velocity (m/s), robot body frame. Positive = left.
+          vy: "f64",
+          // Yaw rate (rad/s). Positive = counter-clockwise.
+          vyaw: "f64"
+        }
+      }
+    ]
+  }
+}

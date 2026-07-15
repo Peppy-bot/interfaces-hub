@@ -1,0 +1,29 @@
+// Measured high-level state of one Unitree G1: locomotion FSM id, motion mode,
+// and battery charge. Every G1 backend (real, MuJoCo, Isaac) emits this so
+// consumers bind the same readout regardless of which backend is deployed.
+{
+  peppy_schema: "contract/v1",
+  manifest: {
+    name: "g1_states",
+    tag: "v1",
+  },
+  interfaces: {
+    topics: [
+      {
+        name: "g1_state",
+        qos_profile: "sensor_data",
+        message_format: {
+          // Locomotion FSM id reported by the controller (onboard ai_sport on
+          // the real robot, the policy stand-in in sim). Matches the SDK's
+          // LocoClient fsm ids.
+          fsm_id: "u8",
+          // Motion mode (0 = idle/damped, 1 = active locomotion). Coarse readout
+          // shared across backends.
+          mode: "u8",
+          // Battery state of charge, percent (0..100). Sim backends report 100.
+          battery_soc: "u8"
+        }
+      }
+    ]
+  }
+}
