@@ -1,0 +1,31 @@
+// Commanded (target) positions for one joint group, the operator or policy
+// intent that pairs with `joint_states` as the action a dataset records.
+// Robot-agnostic and self-describing, like `joint_states`.
+{
+  peppy_schema: "contract/v1",
+  manifest: {
+    name: "joint_commands",
+    tag: "v1"
+  },
+  interfaces: {
+    topics: [
+      {
+        name: "joint_commands",
+        qos_profile: "sensor_data",
+        message_format: {
+          // Target positions, one per joint in this group, in the same units
+          // and order a matching `joint_states` producer reports.
+          positions: {
+            $type: "array",
+            $items: "f64",
+          },
+          // Human-readable name per joint, aligned with `positions`.
+          names: {
+            $type: "array",
+            $items: "string",
+          },
+        },
+      }
+    ]
+  }
+}

@@ -1,0 +1,70 @@
+// Episode control and status for a dataset recorder. start/stop bracket one
+// recorded episode; status is republished periodically so a late-joining
+// consumer still sees the current state. Robot-agnostic: the recorder that
+// implements this consumes whatever joint_states / joint_commands / camera
+// producers a launcher binds to it.
+{
+  peppy_schema: "contract/v1",
+  manifest: {
+    name: "recorder",
+    tag: "v1"
+  },
+  interfaces: {
+    topics: [
+      {
+        name: "recorder_status",
+        qos_profile: "sensor_data",
+        message_format: {
+          // "idle" | "recording" | "error".
+          state: "string",
+          // Episode being recorded, or the last completed one when idle;
+          // -1 before the first episode of the session.
+          episode_index: "i64",
+          // Frames appended to the current episode; 0 when idle.
+          frames: "u64",
+          // Task string of the current (or last) episode; empty before the
+          // first episode.
+          task: "string",
+          // Operator-facing detail: why a start was refused, why an episode
+          // auto-stopped, warnings. Empty when nominal.
+          message: "string",
+          // Free bytes on the output filesystem.
+          disk_free_bytes: "u64",
+        },
+      }
+    ],
+    services: [
+      {
+        // Begins a new episode. accepted: false with a reason in message when
+        // already recording or preconditions fail. Empty task selects the
+        // recorder's configured default task.
+        name: "start_episode",
+        request_message_format: {
+          task: "string",
+        },
+        response_message_format: {
+          accepted: "bool",
+          // Index of the episode that started; -1 when not accepted.
+          episode_index: "i64",
+          message: "string",
+        },
+      },
+      {
+        // Ends the current episode. save: false discards its frames.
+        // accepted: false when idle.
+        name: "stop_episode",
+        request_message_format: {
+          save: "bool",
+        },
+        response_message_format: {
+          accepted: "bool",
+          // Index of the episode that ended; -1 when not accepted.
+          episode_index: "i64",
+          // Frames in the ended episode; 0 when not accepted or discarded.
+          frames: "u64",
+          message: "string",
+        },
+      }
+    ]
+  }
+}

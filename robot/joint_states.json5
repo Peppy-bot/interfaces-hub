@@ -1,0 +1,48 @@
+// Measured proprioceptive state of one joint group (an arm, a gripper, a
+// hand, a mobile base's wheels, ...). Robot-agnostic: the producer decides how
+// many joints it reports and names each one, so a consumer can record or
+// display any robot without knowing its morphology. One producer instance is
+// one joint group; a consumer with a multi-producer slot sees each group
+// tagged by its producer identity.
+{
+  peppy_schema: "contract/v1",
+  manifest: {
+    name: "joint_states",
+    tag: "v1"
+  },
+  interfaces: {
+    topics: [
+      {
+        name: "joint_states",
+        qos_profile: "sensor_data",
+        message_format: {
+          // Measured positions, one per joint in this group (radians for
+          // revolute joints, metres for prismatic, or a unitless fraction for
+          // normalized actuators such as a gripper opening).
+          positions: {
+            $type: "array",
+            $items: "f64",
+          },
+          // Measured velocities, aligned with `positions`. May be empty when
+          // the producer has no velocity estimate.
+          velocities: {
+            $type: "array",
+            $items: "f64",
+          },
+          // Measured effort (torque/force), aligned with `positions`. May be
+          // empty when the producer has no effort estimate.
+          effort: {
+            $type: "array",
+            $items: "f64",
+          },
+          // Human-readable name per joint, aligned with `positions`. Self
+          // describing so a recorder can label dataset dimensions.
+          names: {
+            $type: "array",
+            $items: "string",
+          },
+        },
+      }
+    ]
+  }
+}
