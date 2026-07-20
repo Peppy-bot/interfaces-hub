@@ -4,7 +4,11 @@
 // so consumers can correlate paired frames without timestamp matching. Cameras
 // that emit only color implement rgb_camera. Depth-derived stereo IR and IMU
 // streams are out of scope; an implementation exposing them should implement
-// an additional contract for those.
+// an additional contract for those. Device-specific hardware knobs (depth
+// sensor gain, laser projector power, runtime re-alignment) are native
+// services on the implementing node, not contract members: the contract only
+// carries what every RGB-D device can honor. Frame alignment stays visible as
+// data through each stream header's align_mode field.
 {
   peppy_schema: "contract/v1",
   manifest: {
@@ -121,39 +125,6 @@
           success: "bool",
           message: "string",
           current_value: "i32",
-        },
-      },
-      {
-        name: "set_depth_gain",
-        request_message_format: { value: "i32" },
-        response_message_format: {
-          success: "bool",
-          message: "string",
-          current_value: "i32",
-        },
-      },
-      {
-        name: "set_depth_laser_power_mw",
-        request_message_format: { value: "i32" },
-        response_message_format: {
-          success: "bool",
-          message: "string",
-          current_value: "i32",
-        },
-      },
-      // Toggle spatial alignment between the color and depth streams at runtime:
-      // "none" emits raw streams in their native sensor frames;
-      // "depth_to_color" warps depth into color's viewpoint+resolution;
-      // "color_to_depth" is the inverse.
-      {
-        name: "set_align_mode",
-        request_message_format: {
-          mode: "string",
-        },
-        response_message_format: {
-          success: "bool",
-          message: "string",
-          current_mode: "string",
         },
       },
     ]
