@@ -1,6 +1,6 @@
 // Sim-only actuator setpoint for one openarm arm (positions + velocity
-// feedforward), addressed by `arm_id`. Internal sim plumbing, not the public
-// command contract (openarm_commands).
+// feedforward), addressed by `arm_id`. Internal sim plumbing; the robot's
+// command surface is the joint_link pairing.
 {
   peppy_schema: "contract/v1",
   manifest: {
