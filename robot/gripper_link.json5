@@ -1,5 +1,5 @@
-// The exclusive control conversation between one commander instance and one
-// gripper, as a pairing: the commander streams the desired opening and the
+// The exclusive control conversation between one leader instance and one
+// gripper, as a pairing: the leader streams the desired opening and the
 // gripper streams its measured opening and grip effort back, both directions
 // scoped to the pair.
 //
@@ -12,16 +12,16 @@
     name: "gripper_link",
     tag: "v1",
   },
-  roles: ["commander", "follower"],
+  roles: ["leader", "follower"],
   topics: [
     {
-      emitted_by: "commander",
+      emitted_by: "leader",
       name: "gripper_setpoints",
       // High-frequency stream where only the latest setpoint matters;
       // occasional drops are acceptable.
       qos_profile: "sensor_data",
       message_format: {
-        // Commander-side capture time of this setpoint.
+        // Leader-side capture time of this setpoint.
         stamp: "time",
         // Desired opening fraction, 0 = closed, 1 = fully open.
         opening: "f64",
